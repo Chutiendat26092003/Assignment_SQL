@@ -90,3 +90,21 @@ SELECT n.TenND, n.NgaySinh, s.SoDT
 FROM dbo.NguoiDung AS n
 JOIN dbo.SoDTNG AS s ON s.MaND = n.MaND
 WHERE MONTH(NgaySinh) = MONTH(GETDATE())
+
+--c
+CREATE PROCEDURE SP_Them_DanhBa 
+    @MaND int,
+	@TenND NVARCHAR(150),
+	@NgaySinh DATETIME,
+	@Diachi nvarchar(200)
+AS BEGIN
+    INSERT INTO NguoiDung(MaND, TenND, NgaySinh, Diachi)
+           VALUES(@MaND, @TenND, @NgaySinh, @Diachi)
+END
+
+CREATE PROCEDURE SP_Tim_DanhBa
+    @TenND NVARCHAR(150)
+AS 
+SELECT * FROM dbo.NguoiDung
+WHERE TenND = @TenND
+
