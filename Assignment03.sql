@@ -101,3 +101,20 @@ alter table SoTBCT
 alter table SoTBCT
     add DiemThuong int 
 
+--8
+--a 
+CREATE INDEX IX_TenKH ON dbo.KhachHang(TenKH)
+
+--b
+CREATE VIEW View_KhachHang AS
+SELECT MaKH, TenKH, DiaChi 
+FROM dbo.KhachHang
+
+CREATE VIEW View_KhachHang_ThueBao AS
+SELECT KhachHang.MaKH,TenKH, SoTB 
+FROM dbo.KhachHang
+JOIN dbo.DKThueBao ON DKThueBao.MaKH = KhachHang.MaKH
+JOIN dbo.SoTBCT ON SoTBCT.MaTBHC = DKThueBao.MaTBHC
+
+
+
