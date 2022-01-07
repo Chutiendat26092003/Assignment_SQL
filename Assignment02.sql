@@ -105,9 +105,20 @@ alter table Product
 alter table ProductCompany
      add constraint ck_T check(left(Tel,1)= '0')
 
+--8
+--a 
+CREATE INDEX IX_ProductName ON  dbo.Product(ProductName)
 
+CREATE INDEX IX_Descriptions ON  dbo.Product(Descriptions)
 
+--b
+CREATE VIEW View_SanPham AS
+SELECT ProductID, ProductName, Price FROM dbo.Product
 
+CREATE VIEW View_SanPham_Hang AS
+SELECT ProductID, ProductName, CompanyName
+FROM dbo.Product
+JOIN dbo.ProductCompany ON ProductCompany.CompanyID = Product.CompanyID
 
 
 
