@@ -126,3 +126,25 @@ alter table Orders
 --c
 alter table Product
     add AppearanceDate  date not null default(GETDATE())
+
+--8
+--a 
+CREATE INDEX IX_ProductName ON dbo.Product(ProductName)
+
+CREATE INDEX IX_CustomerName ON  dbo.Customer(CustomerName)
+
+--b
+CREATE VIEW View_KhachHang AS
+SELECT CustomerName, CustomerAddress, Tel 
+FROM dbo.Customer
+
+CREATE VIEW View_SanPham AS 
+SELECT ProductName, Price 
+FROM dbo.Product
+
+CREATE VIEW View_KhachHang_SanPham AS
+SELECT CustomerName,Tel , ProductName, OrderDate, Quantity
+FROM dbo.Customer 
+JOIN dbo.Orders ON Orders.CustomerID = Customer.CustomerID
+JOIN dbo.OrderDetails ON OrderDetails.OrderID = Orders.OrderID
+JOIN dbo.Product ON Product.ProductID = OrderDetails.ProductID
