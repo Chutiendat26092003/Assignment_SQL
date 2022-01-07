@@ -149,3 +149,26 @@ SELECT s.MaSach,s.TenSach, t.TenTG, n.TenNXB,  s.GiaBan
 FROM dbo.Sach AS s
 JOIN dbo.TacGia AS t ON t.MaTG = s.MaTG
 JOIN dbo.NhaXB AS n ON n.MaNXB = s.MaNXB
+
+--18 
+CREATE PROCEDURE SP_Them_DanhBa 
+    @MaLS int,
+	@TenLS NVARCHAR(150)
+AS BEGIN
+    INSERT INTO LoaiSach(MaLS, TenLS)
+           VALUES(@MaLS, @TenLS)
+END
+
+
+CREATE PROCEDURE SP_Tim_Sach
+    @TenSach nvarchar(200)
+AS 
+SELECT * FROM dbo.Sach
+WHERE TenSach = @TenSach
+
+
+CREATE PROCEDURE SP_Sach_ChuyenMuc
+    @MaLS int 
+AS 
+SELECT * FROM dbo.Sach
+WHERE MaLS = @MaLS
