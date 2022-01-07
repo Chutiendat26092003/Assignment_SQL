@@ -116,5 +116,46 @@ FROM dbo.KhachHang
 JOIN dbo.DKThueBao ON DKThueBao.MaKH = KhachHang.MaKH
 JOIN dbo.SoTBCT ON SoTBCT.MaTBHC = DKThueBao.MaTBHC
 
+--c
+
+CREATE PROCEDURE SP_TimKH_ThueBao
+    @ThueBao CHAR(12)
+AS 
+SELECT DKThueBao.MaKH, TenKH, SoCMT, DiaChi
+FROM dbo.KhachHang
+JOIN dbo.DKThueBao ON DKThueBao.MaKH = KhachHang.MaKH
+JOIN dbo.SoTBCT ON SoTBCT.MaTBHC = DKThueBao.MaTBHC
+WHERE SoTB = @ThueBao
+
+
+CREATE PROCEDURE SP_TimTB_KhachHang
+    @TenKH nvarchar(150)
+AS 
+SELECT * FROM dbo.KhachHang
+WHERE TenKH = @TenKH
+
+
+CREATE PROCEDURE SP_ThemTB
+    @MaTBKH int,
+	@SoTB CHAR(12),
+	@LoaiTB nvarchar(50),
+	@DiemThuong int 
+AS BEGIN 
+   INSERT INTO SoTBCT( MaTBHC, SoTB, LoaiTB, DiemThuong)
+          VALUES (@MaTBKH, @SoTB, @LoaiTB, @DiemThuong)
+END 
+
+EXEC SP_ThemTB 1009, '32345122222', N'Trả trước', NULL
+
+SELECT * FROM SoTBCT
+
+
+
+CREATE PROCEDURE SP_HuyTB_MaKH 
+    @MaKH int
+AS BEGIN 
+   DELETE FROM dbo.KhachHang
+   WHERE MaKH = @MaKH
+END 
 
 
