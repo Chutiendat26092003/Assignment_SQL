@@ -94,3 +94,24 @@ alter table SanPham
 
 alter table SanPham
     add PhienBan nvarchar(100)
+
+--8
+--a 
+CREATE INDEX IX_NCTN ON dbo.NCTN(TenNCTN)
+
+--b
+CREATE VIEW View_SanPham AS
+SELECT s.MaSP, s.NgaySX, l.TenloaiSp
+FROM dbo.SanPham AS s
+JOIN dbo.LoaiSP AS l  ON l.MaLoaiSp = s.MaLoaiSp
+
+CREATE VIEW View_SanPham_NCTN AS
+SELECT s.MaSP, s.NgaySX, n.TenNCTN 
+FROM dbo.SanPham AS s
+JOIN dbo.NCTN AS n ON n.MaNCTN = s.MaNCTN
+
+CREATE VIEW View_Top_SanPham AS 
+SELECT TOP 5 s.MaSP, s.NgaySX, l.TenloaiSp 
+FROM dbo.SanPham AS s
+JOIN dbo.LoaiSP AS l ON l.MaLoaiSp = s.MaLoaiSp
+ORDER BY NgaySX
