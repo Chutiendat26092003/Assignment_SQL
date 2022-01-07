@@ -120,5 +120,27 @@ SELECT ProductID, ProductName, CompanyName
 FROM dbo.Product
 JOIN dbo.ProductCompany ON ProductCompany.CompanyID = Product.CompanyID
 
+--c
+CREATE PROCEDURE SP_SanPham_TenHang
+    @TenHang int 
+AS 
+SELECT * FROM  dbo.Product
+WHERE CompanyID = @TenHang
+
+
+
+CREATE PROCEDURE SP_SanPham_Gia
+    @Gia int 
+AS 
+SELECT * FROM  dbo.Product
+WHERE Price >= @Gia
+
+
+
+CREATE PROCEDURE SP_SanPham_HetHang 
+    @hethang int 
+AS 
+SELECT * FROM  dbo.Product
+WHERE QuantityAvailable = @hethang
 
 
