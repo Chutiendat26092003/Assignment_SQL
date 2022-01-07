@@ -138,3 +138,14 @@ GROUP BY MaNXB
 SELECT MaLS, COUNT(MaSach) AS TongDauSach
 FROM dbo.Sach
 GROUP BY MaLS
+
+--16
+CREATE INDEX IX_TenSach ON dbo.Sach(TenSach)
+
+
+--17
+CREATE VIEW View_Sach AS
+SELECT s.MaSach,s.TenSach, t.TenTG, n.TenNXB,  s.GiaBan
+FROM dbo.Sach AS s
+JOIN dbo.TacGia AS t ON t.MaTG = s.MaTG
+JOIN dbo.NhaXB AS n ON n.MaNXB = s.MaNXB
