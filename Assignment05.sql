@@ -71,3 +71,22 @@ alter table NguoiDung
 
 alter table NguoiDung
     add NgayBDLienLac datetime
+  
+  
+--8
+--a 
+CREATE INDEX IX_HoTen ON NguoiDung(TenND)
+
+CREATE INDEX IX_SoDienThoai ON dbo.SoDTNG(SoDT)
+
+--b
+CREATE VIEW View_SoDienThoai AS
+SELECT n.TenND, s.SoDT
+FROM dbo.NguoiDung AS n
+JOIN dbo.SoDTNG AS s ON s.MaND = n.MaND
+
+CREATE VIEW View_SinhNhat AS
+SELECT n.TenND, n.NgaySinh, s.SoDT
+FROM dbo.NguoiDung AS n
+JOIN dbo.SoDTNG AS s ON s.MaND = n.MaND
+WHERE MONTH(NgaySinh) = MONTH(GETDATE())
