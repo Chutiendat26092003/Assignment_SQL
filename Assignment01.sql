@@ -148,3 +148,30 @@ FROM dbo.Customer
 JOIN dbo.Orders ON Orders.CustomerID = Customer.CustomerID
 JOIN dbo.OrderDetails ON OrderDetails.OrderID = Orders.OrderID
 JOIN dbo.Product ON Product.ProductID = OrderDetails.ProductID
+
+--c
+CREATE PROCEDURE SP_TimKH_MaKH 
+    @MakH int 
+AS 
+SELECT * FROM dbo.Customer 
+WHERE CustomerID = @MakH
+
+
+CREATE PROCEDURE SP_TimKH_MaHD  
+    @MaHD int 
+AS 
+SELECT Customer.CustomerID, CustomerName, CustomerAddress, OrderID FROM dbo.Customer 
+JOIN dbo.Orders ON Orders.CustomerID = Customer.CustomerID 
+WHERE OrderID = @MaHD
+
+
+
+CREATE PROCEDURE SP_SanPham_MaKH  
+    @SPMakH int 
+AS 
+SELECT OrderDetails.ProductID, ProductName FROM dbo.Customer 
+JOIN dbo.Orders ON Orders.CustomerID = Customer.CustomerID
+JOIN dbo.OrderDetails ON OrderDetails.OrderID = Orders.OrderID
+JOIN dbo.Product ON Product.ProductID = OrderDetails.ProductID
+WHERE dbo.Customer.CustomerID = @SPMakH
+
