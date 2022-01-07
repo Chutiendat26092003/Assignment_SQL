@@ -115,3 +115,60 @@ SELECT TOP 5 s.MaSP, s.NgaySX, l.TenloaiSp
 FROM dbo.SanPham AS s
 JOIN dbo.LoaiSP AS l ON l.MaLoaiSp = s.MaLoaiSp
 ORDER BY NgaySX
+
+--c
+CREATE PROCEDURE SP_Them_LoaiSP
+    @Maloai CHAR(20),
+	@Tenloai NVARCHAR(200)
+AS BEGIN
+    INSERT INTO LoaiSP(MaLoaiSp, TenloaiSp)
+           VALUES(@Maloai, @Tenloai)
+END
+
+EXECUTE SP_Them_LoaiSP 
+        P23A, N'Máy Giặt Panasonic'
+
+CREATE PROCEDURE SP_Them_LoaiSP
+    @MaNCTN int,
+	@TenNCTN NVARCHAR(200)
+AS BEGIN
+    INSERT INTO NCTN(MaNCTN, TenNCTN)
+           VALUES(@MaNCTN, @TenNCTN)
+END
+
+
+CREATE PROCEDURE SP_Them_SanPham
+    @MaSP int,
+	@NgaySX datetime,
+	@TenSP nvarchar(200),
+	@Maloai CHAR(50),
+	@MaNCTN int,
+	@Phienban nvarchar(50)
+AS BEGIN
+    IF(@NgaySX IS NULL)
+	    SET @NgaySX = GETDATE()
+    INSERT INTO SanPham( MaSP, NgaySX, TenSP, MaLoaiSp, MaNCTN, PhienBan)
+           VALUES(@MaSP, @NgaySX, @TenSP, @Maloai, @MaNCTN, @Phienban)
+END
+
+select * from LoaiSP
+select * from NCTN
+select * from SanPham
+select * from NCTNLoaiSP
+
+CREATE PROCEDURE SP_Xoa_SanPham 
+    @MaSP CHAR(20)
+AS BEGIN 
+   DELETE FROM SanPham
+   WHERE MaSP = @MaSP
+END 
+
+CREATE PROCEDURE SP_Xoa_SanPham_TheoLoai 
+    @MaSP CHAR(20),
+	@MaLoai CHAR(50)
+AS BEGIN 
+   DELETE FROM SanPham
+   WHERE MaSP = @MaSP AND  MaLoaiSp = @MaLoai
+END 
+
+
