@@ -172,3 +172,26 @@ CREATE PROCEDURE SP_Sach_ChuyenMuc
 AS 
 SELECT * FROM dbo.Sach
 WHERE MaLS = @MaLS
+
+--19
+CREATE TRIGGER TG_Xoa_SanPham
+ON Sach 
+FOR DELETE 
+AS 
+    BEGIN 
+	     IF EXISTS(SELECT * FROM inserted WHERE Soluong > 0)
+		 BEGIN
+		     PRINT 'Chua ban het'
+			 ROLLBACK TRANSACTION
+		 END
+    END
+GO
+
+--20
+CREATE TRIGGER TG_Xoa_Hang
+ON LoaiSach
+INSTEAD OF DELETE 
+AS 
+BEGIN 
+    DELETE FROM dbo.LoaiSach  WHERE MaLS IN (SELECT MaLS FROM deteted WHERE SoLuong <0)
+END
