@@ -144,3 +144,24 @@ SELECT * FROM  dbo.Product
 WHERE QuantityAvailable = @hethang
 
 
+--d
+CREATE TRIGGER TG_Xoa_Hang
+ON ProductCompany
+INSTEAD OF DELETE 
+AS 
+BEGIN 
+    DELETE FROM dbo.ProductCompany  WHERE CompanyID IN (SELECT CompanyID FROM deleted)
+END
+
+CREATE TRIGGER TG_Xoa_SanPham
+ON Product
+FOR DELETE 
+AS 
+    BEGIN 
+	     IF EXISTS(SELECT * FROM inserted WHERE QuantityAvailable > 0)
+		 BEGIN
+		     PRINT 'Chua ban het'
+			 ROLLBACK TRANSACTION
+		 END
+    END
+GO
